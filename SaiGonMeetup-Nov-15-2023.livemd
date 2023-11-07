@@ -2,6 +2,12 @@
 
 # Elixir For Programmers
 
+## About My Team
+
+Started in 2022, first project from 2023.
+Target about Elixir/Erlang ecosystem & try to do somethings intersting.
+Team has already contributed 2 open source projects.
+
 ## About Me - Lý Nhật Tâm
 
 * Software Engineer with 4 years experience working with Erlang.

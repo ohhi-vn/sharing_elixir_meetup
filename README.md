@@ -20,8 +20,7 @@ and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/test_live_book>.
 
 
-# Chonk 'O' Meter
-
-Chonk O Meter is a state-of-the-art size estimator. It will rate the size of anything according to the following chart:
-
-![alt chart showing cats of various sizes](./images/chonk.jpg)
+## How to run
+Run `livebook server`
+`[Livebook] Application running at http://localhost:8080/?token=xxx`
+Copy http to browser and enjoy !
