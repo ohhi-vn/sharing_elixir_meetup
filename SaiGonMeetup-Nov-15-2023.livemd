@@ -1,0 +1,383 @@
+<!-- livebook:{"file_entries":[{"name":"ElixirConcurency.png","type":"attachment"},{"name":"ElixirConcurent.png","type":"attachment"},{"name":"distributed.png","type":"attachment"},{"name":"friends.png","type":"attachment"},{"name":"micro_services_architecture.png","type":"attachment"},{"name":"thank.jpeg","type":"attachment"},{"name":"thank_you.png","type":"attachment"}]} -->
+
+# Elixir For Programmers
+
+## About Me - Lý Nhật Tâm
+
+* Software Engineer with 4 years experience working with Erlang.
+* 1 year with Elixir.
+* Current company and position: [Adabeat company](https://adabeat.com/), Cisco Consultant.
+* My linkedIn: [Link](https://www.linkedin.com/in/t%C3%A2m-l%C3%BD-nh%E1%BA%ADt-5a3972177/)
+
+## Ets and Mnesia Database Elixir
+
+### Ets (Erlang term storage)
+
+#### Definition
+
+* This module is an interface to the Erlang built-in term storage BIFs.
+* All ETS tables natively store Erlang tuples containing whatever you want, where one of the tuple elements will act as a primary key that you use to sort things (ie. `{Name, Age, PhoneNumber, Email}`)
+
+#### 4 different types
+
+* **set**: A set table will tell you that each key instance must be unique.
+
+* **ordered_set**: Similar to `set`but ordered by Erlang/Elixir term. It is important to note that key comparison is different within ordered_set. Keys need not match so long as they compare equally. 1 and 1.0 are considered equal.
+
+* **bag**: A bag table can have multiple entries with the same key, as long as the tuples themselves are different (`{key, some, values}` and `{key, other, values}`)
+
+* **duplicate_bag**: The tables of this type work like bag tables, with the exception that they do allow entirely identical tuples to be held multiple time within the same table.
+
+#### Access control
+
+* **public**: Any process can read or write to the table.
+
+* **protected**: The owner process can read and write to the table. Other processes can only read the table (Default setting)
+
+* **private**: Only the owner process can read or write to the table.
+
+#### Example
+
+Create table
+
+* `:ets.new(Name, Options) -> table()`
+
+```elixir
+:ets.new(:countries_table, [:ordered_set, :named_table])
+```
+
+Inserts the object or all of the objects in list `ObjectOrObjects` into table `Table`.
+
+* `:ets.insert(Table, ObjectOrObjects) -> true`
+* Data Format **{Country, CountryCode}**
+
+```elixir
+:ets.insert(:countries_table, {"Vietnam", 84})
+:ets.insert(:countries_table, {"USA", 1})
+:ets.insert(:countries_table, {"Campuchia", 855})
+```
+
+Deletes all objects with key `Key` from table `Table`
+
+* `:ets.delete(Table, Key) -> true`
+
+```elixir
+:ets.delete(:countries_table, "USA")
+```
+
+Deletes all objects that match pattern `Pattern` from table `Table`.
+
+* `:ets.match_delete(Table, Pattern) -> true:`
+
+```elixir
+:ets.match_delete(:countries_table, {"Vietnam", :_})
+```
+
+Matches the objects in table Table against pattern Pattern
+
+* `match_object(Table, Pattern) -> [Object]`
+
+```elixir
+:ets.match_object(:countries_table, {:_, 855})
+```
+
+Matches the objects in table Table against pattern Pattern.
+
+* `:ets.match(Table, Pattern) -> [Match]`
+
+```elixir
+:ets.match(:countries_table, {:"$1", 855})
+```
+
+Returns a list of all objects in table Table.
+
+* `tab2list(Table) -> [Object]`
+
+```elixir
+:ets.tab2list(:countries_table)
+```
+
+#### References:
+
+[Erlang Ets](https://hexdocs.pm/ecto/getting-started.html)<br>
+[Learnyousomeerlang Ets](https://learnyousomeerlang.com/ets)<br>
+[Elixirschool Ets](https://elixirschool.com/en/lessons/storage/ets)<br>
+
+### Mnesia
+
+#### Definition
+
+Mnesia is a distributed database management system written in Erlang and part of the OTP (Open Telecom Platform) framework
+
+#### Table types
+
+* The options are `set`, `bag`, and `ordered_set` similars definition as their ETS
+
+#### Storage strategy
+
+* **ram_copies**: This option makes it so all data is stored exclusively in ETS, so memory only. A table can be replicated on a number of Erlang nodes.
+
+* **disc_only_copies**: Table replicas can be kept on disc only.
+
+* **disc_copies**:  This property specifies a list of Erlang nodes where the table is kept in RAM and on disc
+
+#### Mnesia Transaction
+
+* Mnesia transaction is a mechanism by which a series of database operations can be executed as one functional block. It succeeds entirely or fails entirely and it guaranteed that the tables were left in a consistent state.
+
+#### Example
+
+* Schema
+
+To know how to store tables on disk, how to load them, and what other nodes they should be synchronized with, Mnesia needs to have something called a `schema`, holding all that information.
+
+```elixir
+:mnesia.create_schema([node()])
+```
+
+* Create Table
+
+```elixir
+:mnesia.start()
+:mnesia.create_table(:device, attributes: [:id, :name], disc_copies: [node()], type: :ordered_set)
+```
+
+* Check table info and data of table, structure of table after createed `{:device, :id, :name}`
+
+```elixir
+:mnesia.table_info(:device, :all)
+:ets.tab2list(:device)
+```
+
+* Write transaction
+
+Success case
+
+```elixir
+write_action = fn ->
+  :mnesia.write({:device, 1, "foo"})
+  :mnesia.write({:device, 2, "bar"})
+end
+
+:mnesia.transaction(write_action)
+```
+
+Error case
+
+```elixir
+write_action = fn ->
+  :mnesia.write({:device, 3, "foo123"})
+  :mnesia.write({:device, 4, "bar123", :zzz})
+end
+
+:mnesia.transaction(write_action)
+```
+
+* Read transaction
+
+```elixir
+write_action = fn ->
+  :mnesia.read({:device, 3})
+end
+
+:mnesia.transaction(write_action)
+```
+
+* Delete data by delete_object
+
+```elixir
+get_object = fn ->
+  :mnesia.delete({:device, 1})
+end
+
+:mnesia.transaction(get_object)
+```
+
+#### References:
+
+[Erlang Mnesia](https://www.erlang.org/doc/man/mnesia)<br>
+[Elixirschool Mnesia](https://elixirschool.com/en/lessons/storage/mnesia)<br>
+
+## Concurrency
+
+#### Definition
+
+Concurrency is meant programs that can handle several processed of execution at the same time.
+
+```elixir
+defmodule ExampleConcurrent do
+  # Simple function run in one process
+
+  def main do
+    func_a()
+    func_b()
+  end
+
+  def func_a do
+    :timer.sleep(5000)
+    IO.puts("doing function a")
+  end
+
+  def func_b do
+    IO.puts("doing function b")
+  end
+
+  # Function run in a separate process with spawn function.
+  # When we call spawn, it creates a new process to run the code we specify.
+
+  def main_1 do
+    spawn(fn -> func_a_1() end)
+    func_b()
+  end
+
+  def func_a_1 do
+    :timer.sleep(5000)
+    IO.puts("doing function a")
+  end
+
+  def func_b_1 do
+    IO.puts("doing function b")
+  end
+
+  # Message Passing
+  # send(dest, message): Sends a message to the given dest and returns the message.
+  # To listen we use receive to match messages.
+
+  def loop do
+    # The function uses receive to wait for a message,
+    # and then matches the message in the block.
+    receive do
+      # In this case, the only pattern is a two-element tuple,
+      # where the first element is the original sender’s PID and the second
+      # is the message
+      {sender, msg} ->
+        send(sender, {:ok, "Hello, #{msg}"})
+        # Handle multiple messages by making it loop.
+        # Without recursion our process would exit after handling the first message.
+        loop()
+    end
+  end
+
+  # here's a client run on iex shell
+  # pid = spawn(ExampleConcurrent, :loop, [])
+  # send(pid, {self(), "World!"})
+  # receive do
+  #    {:ok, message} -> IO.puts message
+  # end
+end
+```
+
+#### References:
+
+Programming Elixir 1.6: Functional |> Concurrent Book<br>
+[Kernel](https://hexdocs.pm/elixir/1.15.7/Kernel.html)<br>
+
+## Fault-Tolerance
+
+#### Definition
+
+Elixir’s “Let it crash” philosophy encourages the isolation of errors to prevent cascading failures. When a process fails, it can be restarted independently, ensuring that other parts of the system remain operational.
+
+#### gen_server
+
+OTP behaviour module provides the server of a client-server relation
+
+#### Example
+
+```elixir
+defmodule ExampleGenserver do
+  use GenServer
+
+  def start_link(arg) do
+    GenServer.start_link(__MODULE__, arg, name: :example_gen_server)
+  end
+
+  # Called by GenServer when starting a new server.
+  def init(_arg) do
+    IO.puts("gen_server start")
+    {:ok, %{}}
+  end
+
+  # The function handle_call/3 is used to work with synchronous messages.
+  # It takes 3 arguments: Request, From, and State.
+  def handle_call({:get, key}, _from, state) do
+    {:reply, Map.get(state, key), state}
+  end
+
+  def handle_call(:get_state, _from, state) do
+    {:reply, state, state}
+  end
+
+  # The handle_cast/2 callback, it takes the parameters Message and State and
+  # is used to handle asynchronous calls.
+  def handle_cast({:put, key, value}, state) do
+    {:noreply, Map.put(state, key, value)}
+  end
+
+  # import Supervisor
+  # # child specifications
+  # children = [
+  #   %{
+  #     id: ExampleGenserver,
+  #     start: {ExampleGenserver, :start_link, [[]]}
+  #   }
+  # ]
+
+  # {:ok, pid} = Supervisor.start_link(children, strategy: :one_for_one)
+  # GenServer.call(:example_gen_server, {:get, :a})
+  # GenServer.cast(:example_gen_server, {:put, :a, 10})
+  # GenServer.cast(:example_gen_server, {:put, :b, "Elixir"})
+  # GenServer.call(:example_gen_server, {:get, :a})
+  # GenServer.call(:example_gen_server, {:get, :b})
+  # GenServer.call(:example_gen_server, :get_state)
+
+  # pid = Process.whereis(:example_gen_server)
+  # Process.exit(pid, :kill)
+end
+```
+
+## Distributed
+
+![System as a cluster](files/distributed.png)
+
+A distributed Erlang system consists of a number of Erlang runtime systems communicating with each other. Each such runtime system is called a node.
+
+Node: It is simply a running Erlang VM called Beam.
+
+You can send a message to another process regardless of whether it’s running in the same BEAM instance or on another instance on a remote machine.
+
+How we can apply Distributed technique into system ?
+
+![Micro_services_architecture](files/micro_services_architecture.png)
+
+```elixir
+iex -- sname(node_one)
+
+iex -- sname(node_two)
+
+Node.list()
+
+# run in node two
+Node.connect(:node_one@ZenZen)
+
+# run in node one
+Node.connect(:node_two@ZenZen)
+
+# run in node one
+Node.spawn(:node_two@ZenZen, fn -> IO.puts("Hello from #{node}") end)
+# run in node two
+Node.spawn(:node_one@ZenZen, fn -> IO.puts("Hello from #{node}") end)
+
+# Group leader process
+# All standard I/O calls (such as IO.puts/1) are forwarded to the group leader—a
+# pro- cess that’s in charge of performing the actual input or output. A
+# spawned process inherits the group leader from the process that spawned it.
+# This is true even when you’re spawning a process on another node.
+# Therefore, your process may run on node2, but its group leader is still on
+# node1. As a consequence, the string to be printed is created on node2
+# (as the string contents prove), but the output is printed on node1.
+```
+
+## Question & Discussion
+
+![Thank you](files/thank_you.png)
