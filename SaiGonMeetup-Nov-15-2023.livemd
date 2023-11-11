@@ -357,9 +357,9 @@ How we can apply Distributed technique into system ?
 ![Micro_services_architecture](files/micro_services_architecture.png)
 
 ```elixir
-iex -- sname(node_one)
+iex --sname node_one
 
-iex -- sname(node_two)
+iex --sname node_two
 
 Node.list()
 
@@ -375,8 +375,8 @@ Node.spawn(:node_two@ZenZen, fn -> IO.puts("Hello from #{node}") end)
 Node.spawn(:node_one@ZenZen, fn -> IO.puts("Hello from #{node}") end)
 
 # Group leader process
-# All standard I/O calls (such as IO.puts/1) are forwarded to the group leader—a
-# pro- cess that’s in charge of performing the actual input or output. A
+# All standard I/O calls (such as IO.puts/1) are forwarded to the group leader
+# a process that’s in charge of performing the actual input or output. A
 # spawned process inherits the group leader from the process that spawned it.
 # This is true even when you’re spawning a process on another node.
 # Therefore, your process may run on node2, but its group leader is still on

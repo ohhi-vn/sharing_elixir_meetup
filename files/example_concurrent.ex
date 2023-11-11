@@ -37,7 +37,7 @@ defmodule ExampleConcurrent do
   # send(dest, message): Sends a message to the given dest and returns the message.
   # To listen we use receive to match messages.
 
-
+  # Server
   def loop do
     # The function uses receive to wait for a message,
     # and then matches the message in the block.
@@ -53,6 +53,7 @@ defmodule ExampleConcurrent do
     end
   end
 
+  # Client
   # here's a client run on iex shell
   # pid = spawn(ExampleConcurrent, :loop, [])
   # send(pid, {self(), "World!"})
