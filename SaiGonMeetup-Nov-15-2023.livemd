@@ -4,9 +4,9 @@
 
 ## About My Team
 
-Started in 2022, first project from 2023.
-Target about Elixir/Erlang ecosystem & try to do somethings intersting.
-Team has already contributed 2 open source projects.
+* Started in 2022, first project from 2023.
+* Target about Elixir/Erlang ecosystem & try to do somethings intersting.
+* Team has already contributed 2 open source projects.
 
 ## About Me - Lý Nhật Tâm
 
@@ -63,22 +63,6 @@ Inserts the object or all of the objects in list `ObjectOrObjects` into table `T
 :ets.insert(:countries_table, {"Campuchia", 855})
 ```
 
-Deletes all objects with key `Key` from table `Table`
-
-* `:ets.delete(Table, Key) -> true`
-
-```elixir
-:ets.delete(:countries_table, "USA")
-```
-
-Deletes all objects that match pattern `Pattern` from table `Table`.
-
-* `:ets.match_delete(Table, Pattern) -> true:`
-
-```elixir
-:ets.match_delete(:countries_table, {"Vietnam", :_})
-```
-
 Matches the objects in table Table against pattern Pattern
 
 * `match_object(Table, Pattern) -> [Object]`
@@ -99,6 +83,22 @@ Returns a list of all objects in table Table.
 
 * `tab2list(Table) -> [Object]`
 
+Deletes all objects with key `Key` from table `Table`
+
+* `:ets.delete(Table, Key) -> true`
+
+```elixir
+:ets.delete(:countries_table, "USA")
+```
+
+Deletes all objects that match pattern `Pattern` from table `Table`.
+
+* `:ets.match_delete(Table, Pattern) -> true:`
+
+```elixir
+:ets.match_delete(:countries_table, {"Vietnam", :_})
+```
+
 ```elixir
 :ets.tab2list(:countries_table)
 ```
@@ -113,7 +113,7 @@ Returns a list of all objects in table Table.
 
 #### Definition
 
-Mnesia is a distributed database management system written in Erlang and part of the OTP (Open Telecom Platform) framework
+Mnesia is a distributed database management system written in Erlang and part of the OTP (Open Telecom Platform) framework.
 
 #### Table types
 
@@ -125,7 +125,7 @@ Mnesia is a distributed database management system written in Erlang and part of
 
 * **disc_only_copies**: Table replicas can be kept on disc only.
 
-* **disc_copies**:  This property specifies a list of Erlang nodes where the table is kept in RAM and on disc
+* **disc_copies**:  This property specifies a list of Erlang nodes where the table is kept in RAM and on disc.
 
 #### Mnesia Transaction
 
@@ -182,21 +182,21 @@ end
 * Read transaction
 
 ```elixir
-write_action = fn ->
-  :mnesia.read({:device, 3})
+read_action = fn ->
+  :mnesia.read({:device, 1})
 end
 
-:mnesia.transaction(write_action)
+:mnesia.transaction(read_action)
 ```
 
-* Delete data by delete_object
+* Delete data by `delete`
 
 ```elixir
-get_object = fn ->
+delete_object = fn ->
   :mnesia.delete({:device, 1})
 end
 
-:mnesia.transaction(get_object)
+:mnesia.transaction(delete_object)
 ```
 
 #### References:
@@ -208,7 +208,7 @@ end
 
 #### Definition
 
-Concurrency is meant programs that can handle several processed of execution at the same time.
+Concurrency is meant programs that can handle several processes of execution at the same time.
 
 ```elixir
 defmodule ExampleConcurrent do

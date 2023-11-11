@@ -56,8 +56,8 @@ defmodule ExampleConcurrent do
   # here's a client run on iex shell
   # pid = spawn(ExampleConcurrent, :loop, [])
   # send(pid, {self(), "World!"})
-  receive do
-     {:ok, message} -> IO.puts message
-  end
+  # receive do
+  #    {:ok, message} -> IO.puts message
+  # end
 
 end
