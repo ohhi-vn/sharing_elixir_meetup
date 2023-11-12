@@ -21,6 +21,7 @@ be found at <https://hexdocs.pm/test_live_book>.
 
 
 ## How to run
-Run `livebook server`
-`[Livebook] Application running at http://localhost:8080/?token=xxx`
-Copy http to browser and enjoy !
+* Run `livebook server` command.
+* `[Livebook] Application running at http://localhost:8080/?token=xxx`
+* Copy http to browser and enjoy !
+* Example files under `/files` folder.

@@ -2,11 +2,12 @@
 
 # Elixir For Programmers
 
-## About My Team
+## About My Team (Ohhi.vn team)
 
 * Started in 2022, first project from 2023.
 * Target about Elixir/Erlang ecosystem & try to do somethings intersting.
 * Team has already contributed 2 open source projects.
+* Contact: info@ohhi.vn.
 
 ## About Me - Lý Nhật Tâm
 
@@ -105,7 +106,7 @@ Deletes all objects that match pattern `Pattern` from table `Table`.
 
 #### References:
 
-[Erlang Ets](https://hexdocs.pm/ecto/getting-started.html)<br>
+[Erlang Ets](https://www.erlang.org/doc/man/ets.html)<br>
 [Learnyousomeerlang Ets](https://learnyousomeerlang.com/ets)<br>
 [Elixirschool Ets](https://elixirschool.com/en/lessons/storage/ets)<br>
 
@@ -275,7 +276,7 @@ end
 
 #### References:
 
-Programming Elixir 1.6: Functional |> Concurrent Book<br>
+"Programming Elixir 1.6: Functional |> Concurrent |> Pragmatic |> Fun" Book<br>
 [Kernel](https://hexdocs.pm/elixir/1.15.7/Kernel.html)<br>
 
 ## Fault-Tolerance
@@ -357,9 +358,9 @@ How we can apply Distributed technique into system ?
 ![Micro_services_architecture](files/micro_services_architecture.png)
 
 ```elixir
-iex --sname node_one
+iex -- sname(node_one)
 
-iex --sname node_two
+iex -- sname(node_two)
 
 Node.list()
 
