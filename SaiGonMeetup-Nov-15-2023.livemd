@@ -1,31 +1,40 @@
-<!-- livebook:{"file_entries":[{"name":"ElixirConcurency.png","type":"attachment"},{"name":"ElixirConcurent.png","type":"attachment"},{"name":"distributed.png","type":"attachment"},{"name":"friends.png","type":"attachment"},{"name":"micro_services_architecture.png","type":"attachment"},{"name":"thank.jpeg","type":"attachment"},{"name":"thank_you.png","type":"attachment"}]} -->
+<!-- livebook:{"file_entries":[{"name":"Angular.png","type":"attachment"},{"name":"Java-Logo.png","type":"attachment"},{"name":"Python.png","type":"attachment"},{"name":"React.png","type":"attachment"},{"name":"c_sharp.jpeg","type":"attachment"},{"name":"distributed.png","type":"attachment"},{"name":"micro_services_architecture.png","type":"attachment"},{"name":"my-sql.png","type":"attachment"},{"name":"sql-server.jpeg","type":"attachment"},{"name":"thank_you.png","type":"attachment"}]} -->
 
-# Elixir For Programmers
+# Elixir for Developer
 
-## About My Team (Ohhi.vn team)
+## Brief contents
 
-* Started in 2022, first project from 2023.
-* Target about Elixir/Erlang ecosystem & try to do somethings intersting.
-* Team has already contributed 2 open source projects.
-* Contact: info@ohhi.vn.
+* [1.About Me - Lý Nhật Tâm](#1-about-me---lý-nhật-tâm)
+* [2.About My Team (Ohhi.vn team)](#2-about-my-team-ohhivn-team)
+* [3.Ets and Mnesia Database Elixir](#3-ets-and-mnesia-database-elixir)
+* [4.Concurrency](#4-concurrency)
+* [5.Fault-Tolerance](#5-fault-tolerance)
+* [6.Distributed](#6-distributed)
 
-## About Me - Lý Nhật Tâm
+## 1. About Me - Lý Nhật Tâm
 
 * Software Engineer with 4 years experience working with Erlang.
 * 1 year with Elixir.
 * Current company and position: [Adabeat company](https://adabeat.com/), Cisco Consultant.
 * My linkedIn: [Link](https://www.linkedin.com/in/t%C3%A2m-l%C3%BD-nh%E1%BA%ADt-5a3972177/)
 
-## Ets and Mnesia Database Elixir
+## 2. About My Team (Ohhi.vn team)
 
-### Ets (Erlang term storage)
+* Started in 2022, first project from 2023.
+* Target about Elixir/Erlang ecosystem & try to do somethings intersting.
+* Team has already contributed 2 open source projects.
+* Contact: info@ohhi.vn.
 
-#### Definition
+## 3. Ets and Mnesia Database Elixir
+
+### 3.1. Ets (Erlang term storage)
+
+#### 3.1.1. Definition
 
 * This module is an interface to the Erlang built-in term storage BIFs.
 * All ETS tables natively store Erlang tuples containing whatever you want, where one of the tuple elements will act as a primary key that you use to sort things (ie. `{Name, Age, PhoneNumber, Email}`)
 
-#### 4 different types
+#### 3.1.2. 4 different types
 
 * **set**: A set table will tell you that each key instance must be unique.
 
@@ -35,7 +44,7 @@
 
 * **duplicate_bag**: The tables of this type work like bag tables, with the exception that they do allow entirely identical tuples to be held multiple time within the same table.
 
-#### Access control
+#### 3.1.3. Access control
 
 * **public**: Any process can read or write to the table.
 
@@ -43,7 +52,7 @@
 
 * **private**: Only the owner process can read or write to the table.
 
-#### Example
+#### 3.1.4. Example
 
 Create table
 
@@ -84,6 +93,10 @@ Returns a list of all objects in table Table.
 
 * `tab2list(Table) -> [Object]`
 
+```elixir
+:ets.tab2list(:countries_table)
+```
+
 Deletes all objects with key `Key` from table `Table`
 
 * `:ets.delete(Table, Key) -> true`
@@ -100,27 +113,23 @@ Deletes all objects that match pattern `Pattern` from table `Table`.
 :ets.match_delete(:countries_table, {"Vietnam", :_})
 ```
 
-```elixir
-:ets.tab2list(:countries_table)
-```
-
-#### References:
+#### 3.1.5. References:
 
 [Erlang Ets](https://www.erlang.org/doc/man/ets.html)<br>
 [Learnyousomeerlang Ets](https://learnyousomeerlang.com/ets)<br>
 [Elixirschool Ets](https://elixirschool.com/en/lessons/storage/ets)<br>
 
-### Mnesia
+### 3.2. Mnesia
 
-#### Definition
+#### 3.2.1. Definition
 
 Mnesia is a distributed database management system written in Erlang and part of the OTP (Open Telecom Platform) framework.
 
-#### Table types
+#### 3.2.2. Table types
 
 * The options are `set`, `bag`, and `ordered_set` similars definition as their ETS
 
-#### Storage strategy
+#### 3.2.3. Storage strategy
 
 * **ram_copies**: This option makes it so all data is stored exclusively in ETS, so memory only. A table can be replicated on a number of Erlang nodes.
 
@@ -128,11 +137,11 @@ Mnesia is a distributed database management system written in Erlang and part of
 
 * **disc_copies**:  This property specifies a list of Erlang nodes where the table is kept in RAM and on disc.
 
-#### Mnesia Transaction
+#### 3.2.4. Mnesia Transaction
 
 * Mnesia transaction is a mechanism by which a series of database operations can be executed as one functional block. It succeeds entirely or fails entirely and it guaranteed that the tables were left in a consistent state.
 
-#### Example
+#### 3.2.5. Example
 
 * Schema
 
@@ -200,14 +209,14 @@ end
 :mnesia.transaction(delete_object)
 ```
 
-#### References:
+#### 3.2.6. References:
 
 [Erlang Mnesia](https://www.erlang.org/doc/man/mnesia)<br>
 [Elixirschool Mnesia](https://elixirschool.com/en/lessons/storage/mnesia)<br>
 
-## Concurrency
+## 4. Concurrency
 
-#### Definition
+#### 4.0.1. Definition
 
 Concurrency is meant programs that can handle several processes of execution at the same time.
 
@@ -274,22 +283,22 @@ defmodule ExampleConcurrent do
 end
 ```
 
-#### References:
+#### 4.0.2. References:
 
 "Programming Elixir 1.6: Functional |> Concurrent |> Pragmatic |> Fun" Book<br>
 [Kernel](https://hexdocs.pm/elixir/1.15.7/Kernel.html)<br>
 
-## Fault-Tolerance
+## 5. Fault-Tolerance
 
-#### Definition
+#### 5.0.1. Definition
 
 Elixir’s “Let it crash” philosophy encourages the isolation of errors to prevent cascading failures. When a process fails, it can be restarted independently, ensuring that other parts of the system remain operational.
 
-#### gen_server
+#### 5.0.2. gen_server
 
 OTP behaviour module provides the server of a client-server relation
 
-#### Example
+#### 5.0.3. Example
 
 ```elixir
 defmodule ExampleGenserver do
@@ -343,7 +352,7 @@ defmodule ExampleGenserver do
 end
 ```
 
-## Distributed
+## 6. Distributed
 
 ![System as a cluster](files/distributed.png)
 
@@ -358,9 +367,9 @@ How we can apply Distributed technique into system ?
 ![Micro_services_architecture](files/micro_services_architecture.png)
 
 ```elixir
-iex -- sname(node_one)
+"iex --sname node_one"
 
-iex -- sname(node_two)
+"iex --sname node_two"
 
 Node.list()
 
@@ -385,6 +394,6 @@ Node.spawn(:node_one@ZenZen, fn -> IO.puts("Hello from #{node}") end)
 # (as the string contents prove), but the output is printed on node1.
 ```
 
-## Question & Discussion
+## 7. Question & Discussion
 
 ![Thank you](files/thank_you.png)
