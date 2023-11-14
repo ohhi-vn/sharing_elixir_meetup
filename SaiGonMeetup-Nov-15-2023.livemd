@@ -21,7 +21,7 @@
 ## 2. About My Team (Ohhi.vn team)
 
 * Started in 2022, first project from 2023.
-* Target about Elixir/Erlang ecosystem & try to do somethings intersting.
+* Target about Elixir/Erlang ecosystem & try to do something interesting.
 * Team has already contributed 2 open source projects.
 * Contact: info@ohhi.vn.
 
@@ -38,7 +38,7 @@
 
 * **set**: A set table will tell you that each key instance must be unique.
 
-* **ordered_set**: Similar to `set`but ordered by Erlang/Elixir term. It is important to note that key comparison is different within ordered_set. Keys need not match so long as they compare equally. 1 and 1.0 are considered equal.
+* **ordered_set**: Similar to `set` but ordered by Erlang/Elixir term. It is important to note that key comparison is different within ordered_set. Keys need not match so long as they compare equally. 1 and 1.0 are considered equal.
 
 * **bag**: A bag table can have multiple entries with the same key, as long as the tuples themselves are different (`{key, some, values}` and `{key, other, values}`)
 
@@ -48,7 +48,7 @@
 
 * **public**: Any process can read or write to the table.
 
-* **protected**: The owner process can read and write to the table. Other processes can only read the table (Default setting)
+* **protected**: The owner process can read and write to the table. Other processes can only read the table (Default setting).
 
 * **private**: Only the owner process can read or write to the table.
 
@@ -73,7 +73,7 @@ Inserts the object or all of the objects in list `ObjectOrObjects` into table `T
 :ets.insert(:countries_table, {"Campuchia", 855})
 ```
 
-Matches the objects in table Table against pattern Pattern
+Matches the objects in table Table against pattern Pattern.
 
 * `match_object(Table, Pattern) -> [Object]`
 
@@ -97,7 +97,7 @@ Returns a list of all objects in table Table.
 :ets.tab2list(:countries_table)
 ```
 
-Deletes all objects with key `Key` from table `Table`
+Deletes all objects with key `Key` from table `Table`.
 
 * `:ets.delete(Table, Key) -> true`
 
@@ -127,7 +127,7 @@ Mnesia is a distributed database management system written in Erlang and part of
 
 #### 3.2.2. Table types
 
-* The options are `set`, `bag`, and `ordered_set` similars definition as their ETS
+* The options are `set`, `bag`, and `ordered_set` similars definition as their ETS.
 
 #### 3.2.3. Storage strategy
 
@@ -158,7 +158,7 @@ To know how to store tables on disk, how to load them, and what other nodes they
 :mnesia.create_table(:device, attributes: [:id, :name], disc_copies: [node()], type: :ordered_set)
 ```
 
-* Check table info and data of table, structure of table after createed `{:device, :id, :name}`
+* Check table info and data of table, structure of table after created `{:device, :id, :name}`
 
 ```elixir
 :mnesia.table_info(:device, :all)
@@ -167,7 +167,7 @@ To know how to store tables on disk, how to load them, and what other nodes they
 
 * Write transaction
 
-Success case
+Success case.
 
 ```elixir
 write_action = fn ->
@@ -178,7 +178,7 @@ end
 :mnesia.transaction(write_action)
 ```
 
-Error case
+Error case.
 
 ```elixir
 write_action = fn ->
@@ -189,7 +189,7 @@ end
 :mnesia.transaction(write_action)
 ```
 
-* Read transaction
+* Read transaction.
 
 ```elixir
 read_action = fn ->
@@ -199,7 +199,7 @@ end
 :mnesia.transaction(read_action)
 ```
 
-* Delete data by `delete`
+* Delete data by `delete`.
 
 ```elixir
 delete_object = fn ->
@@ -296,7 +296,7 @@ Elixir’s “Let it crash” philosophy encourages the isolation of errors to p
 
 #### 5.0.2. gen_server
 
-OTP behaviour module provides the server of a client-server relation
+OTP behaviour module provides the server of a client-server relation.
 
 #### 5.0.3. Example
 
